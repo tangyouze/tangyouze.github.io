@@ -5,10 +5,10 @@
         author_email="rar.zip.7z@google.com">
         <Require feature="google.calendar-0.5" />
         <Require feature="google.calendar-0.5.read"/>
+        <Require feature="dynamic-height"/>
     </ModulePrefs>
     <Content type="html">
         <![CDATA[
-
 
 
 
@@ -39,10 +39,20 @@ function getCheckEvent(){
 
 
 var selectedEvent;
-function subscribeEventCallback(calendarEvent) {
+function showAttendees(attendees){
+    attendeesHTML = '<ul>'
+    for(attendee in attendees){
+        attendeesHTML += '<li>' + attendee.email + '</li>';
+    }
+    attendeesHTML +='</ul>';
+    document.getElementById('divAttendees').style.display = 'block';
+    document.getElementById('divAttendees').html(attendeesHTML)
+
+}
+function subscribeEventCallback(selectedEvent) {
     selectedEvent = calendarEvent;
     var out;
-    if (!calendarEvent || calendarEvent['accessLevel']!='owner') {
+    if (!selectedEvent || selectedEvent['accessLevel']!='owner') {
         // No event is onscreen.
         out = 'No Event Onscreen!';
         document.getElementById('btnSubmitToWS').style.display = 'none';
@@ -50,13 +60,14 @@ function subscribeEventCallback(calendarEvent) {
     } else {
         document.getElementById('btnSubmitToWS').style.display = 'block';
         var out = '';
-        if ('title' in calendarEvent) {
-            out += 'Title = ' + calendarEvent['title'] + '\n';
+        if ('title' in selectedEvent) {
+            out += 'Title = ' + selectedEvent['title'] + '\n';
         }
-        if ('location' in calendarEvent) {
-            out += 'Location = ' + calendarEvent['location'] + '\n';
+        if ('location' in selectedEvent) {
+            out += 'Location = ' + selectedEvent['location'] + '\n';
         }
-        console.log(calendarEvent.attendeeCount);
+        showAttendees(selectedEvent.attendees)
+        console.log(selectedEvent.attendeeCount);
     }
     console.log(out);
 }
@@ -73,11 +84,12 @@ function ReSubmitToWS(){
 }
 
 /*
- * init calendar
+ * init calendar, set all element to invisible
  */
 function getPrefsCallback(prefs){
     document.getElementById('btnSubmitToWS').style.display = 'none';
     document.getElementById('btnReSubmitToWS').style.display = 'none';
+    document.getElementById('divAttendees').style.display = 'none';
     google.calendar.read.subscribeToEvents(subscribeEventCallback);
 }
 
@@ -87,6 +99,7 @@ google.calendar.getPreferences(getPrefsCallback);
 
 </script>
 <center>
+    <div id="divAttendees"></div>
     <form>
         <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit to WS </button>
         <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">ReSubmit to WS </button>
