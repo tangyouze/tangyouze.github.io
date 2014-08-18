@@ -28,7 +28,7 @@ function eventsCallback(events){
 function getCheckEvent(){
     console.log('get selected events');
     google.calendar.read.getEvents(
-            eventsCallback, 'selected',
+            eventsCallback, 'selected'
             );
 }
 function getPrefsCallback(prefs){
