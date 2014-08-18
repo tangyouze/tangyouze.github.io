@@ -36,17 +36,13 @@ function getCheckEvent(){
             eventsCallback, 'selected'
             );
 }
-function getPrefsCallback(prefs){
-    google.calendar.subscribeToDataChange(getCheckEvent);
-}
-//google.calendar.getPreferences(getPrefsCallback);
 
 
 var selectedEvent;
 function subscribeEventCallback(calendarEvent) {
     selectedEvent = calendarEvent;
     var out;
-    if (!calendarEvent || calendarEvent['accessLevel']!='Owner') {
+    if (!calendarEvent || calendarEvent['accessLevel']!='owner') {
         // No event is onscreen.
         out = 'No Event Onscreen!';
         document.getElementById('btnSubmitToWS').style.display = 'none';
@@ -64,6 +60,9 @@ function subscribeEventCallback(calendarEvent) {
     }
     console.log(out);
 }
+/*
+ * send meta data to web service
+ */
 function SubmitToWS(){
     console.log(JSON.stringify(selectedEvent));
     return false;
@@ -72,12 +71,16 @@ function ReSubmitToWS(){
     console.log(JSON.stringify(selectedEvent));
     return false;
 }
-google.calendar.read.subscribeToEvents(subscribeEventCallback);
 
-function getPreferences(prefs){
+/*
+ * init calendar
+ */
+function getPrefsCallback(prefs){
     document.getElementById('btnSubmitToWS').style.display = 'none';
     document.getElementById('btnReSubmitToWS').style.display = 'none';
+    google.calendar.read.subscribeToEvents(subscribeEventCallback);
 }
+
 google.calendar.getPreferences(getPrefsCallback);
 
 
