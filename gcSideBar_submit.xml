@@ -25,8 +25,8 @@
     <script>
 
 
-    var ws_url = "http://google.com/ws";
-    var filter_url = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
+    var webserviceURL = "http://google.com/ws";
+    var filterURL = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
 
     // notify user when we 
     function submitAttendenceResponse() {
@@ -36,7 +36,7 @@
     /*
      * submit the information contain selected attendees and
      * metadata to the server
-     * ws_url can be configured as global variable
+     * webserviceURL can be configured as global variable
      */
     function submitAttendence() {
         var checkedAttendees = $(":checkbox:checked").map(function() {
@@ -53,7 +53,7 @@
         var params = {}
         params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
         params[gadgets.io.RequestParameters.POST_DATA] = postdata;
-        gadgets.io.makeRequest(ws_url, submitAttendenceResponse, params);
+        gadgets.io.makeRequest(webserviceURL, submitAttendenceResponse, params);
         var eventid = selectedEvent.id;
 
         // store whether user submitted this event or not 
@@ -107,7 +107,7 @@
     function initFilters() {
         var params = {};
         params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
-        gadgets.io.makeRequest(init_filter_url, initFilterResponse, params);
+        gadgets.io.makeRequest(filterURL, initFilterResponse, params);
     }
 
     /*
