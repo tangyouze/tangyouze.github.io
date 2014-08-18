@@ -53,17 +53,17 @@ function showAttendees(attendees){
             + attendees[i].email + "<br>";
     }
     attendeesHTML +='<button onclick="return selectAttendee();"> confirm</button>';
-    $('#formAttendees').style.display = 'block';
-    $('#formAttendees').innerHTML = attendeesHTML;
+    $('#formAttendees').show();
+    $('#formAttendees').html( attendeesHTML );
     console.log(attendeesHTML);
 }
 /*
  * hide all elements
  */
 function hideElements(){
-    $('#btnSubmitToWS').style.display = 'none';
-    $('#btnReSubmitToWS').style.display = 'none';
-    $('#formAttendees').style.display = 'none';
+    $('#btnSubmitToWS').hide();
+    $('#btnReSubmitToWS').hide();
+    $('#formAttendees').hide();
 }
 // global variable that store user selected event
 var selectedEvent;
@@ -75,7 +75,7 @@ function subscribeEventCallback(calendarEvent) {
         out = 'No Event Onscreen!';
         hideElements();
     } else {
-        $('#btnSubmitToWS').style.display = 'block';
+        $('#btnSubmitToWS').show();
         var out = '';
         if ('title' in selectedEvent) {
             out += 'Title = ' + selectedEvent['title'] + '\n';
