@@ -1,13 +1,12 @@
 
+<?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-    <ModulePrefs
-        title="Topcoder"
-        height="61"
-        description="Topcoder"
-        author="xxoo"
-        author_email="rar.zip.7z@gmail.com">
-        <Content type="html">
-            <![CDATA[ 
+  <ModulePrefs title="addCalendar Test" height="40" author="Google"
+     author_email="calendar-gadget-questions@google.com">
+   <Require feature="google.calendar-0.5" />
+  </ModulePrefs>
+  <Content type="html">
+<![CDATA[
 
 
 
@@ -21,8 +20,6 @@
 
 
 
-
-
-            ]]>
-        </Content>
+]]>
+  </Content>
 </Module>
