@@ -34,9 +34,9 @@ function subscribeEventCallback(calendarEvent) {
     if (!calendarEvent) {
         // No event is onscreen.
         out = 'No Event Onscreen!';
-        document.getElementById('SubmitToWS').style.display = 'none';
+        document.getElementById('btnSubmitToWS').style.display = 'none';
     } else {
-        document.getElementById('SubmitToWS').style.display = 'block';
+        document.getElementById('btnSubmitToWS').style.display = 'block';
         var out = '';
         if ('title' in calendarEvent) {
             out += 'Title = ' + calendarEvent['title'] + '\n';
@@ -51,6 +51,9 @@ function subscribeEventCallback(calendarEvent) {
 function SubmitToWS(){
     console.log(selectedEvent);
 }
+function ReSubmitToWS(){
+    console.log(selectedEvent);
+}
 google.calendar.read.subscribeToEvents(subscribeEventCallback);
 
 
@@ -58,7 +61,8 @@ google.calendar.read.subscribeToEvents(subscribeEventCallback);
 </script>
 <center>
     <form>
-        <button id='SubmitToWS' onclick="SubmitToWS()">Submit to WS </button>
+        <button id='btnSubmitToWS' onclick="SubmitToWS()">Submit to WS </button>
+        <button id='btnReSubmitToWS' onclick="ReSubmitToWS()">ReSubmit to WS </button>
     </form>
 
 </center>
