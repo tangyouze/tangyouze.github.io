@@ -35,6 +35,7 @@ function selectAttendee(){
     var data = { attendee: JSON.stringify(checkedAttendees),
               metadata: JSON.stringify(selectedEvent) };
     var postdata =  gadgets.io.encodeValues(data);
+    console.log(postdata);
     var params = {}
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;  
     params[gadgets.io.RequestParameters.POST_DATA] = postdata;
