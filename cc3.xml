@@ -104,6 +104,7 @@ function match_filter(email){
 
 var filters=[];
 function filter_response(obj){
+    console.log(obj.text);
     filters = obj.text.split('\r?\n');
     console.log(filters);
 }
