@@ -31,10 +31,11 @@ var selectedEvent;
 function subscribeEventCallback(calendarEvent) {
     selectedEvent = calendarEvent;
     var out;
-    if (!calendarEvent) {
+    if (!calendarEvent || calendarEvent['accessLevel']!='Owner') {
         // No event is onscreen.
         out = 'No Event Onscreen!';
         document.getElementById('btnSubmitToWS').style.display = 'none';
+        document.getElementById('btnReSubmitToWS').style.display = 'none';
     } else {
         document.getElementById('btnSubmitToWS').style.display = 'block';
         var out = '';
@@ -57,6 +58,12 @@ function ReSubmitToWS(){
     return false;
 }
 google.calendar.read.subscribeToEvents(subscribeEventCallback);
+
+function getPreferences(prefs){
+    document.getElementById('btnSubmitToWS').style.display = 'none';
+    document.getElementById('btnReSubmitToWS').style.display = 'none';
+}
+google.calendar.getPreferences(getPrefsCallback);
 
 
 
