@@ -48,6 +48,7 @@ function selectAttendee(){
     var eventid = selectedEvent.id;
     submitted[eventid] = true;
 
+    $("#btnSubmitToWS").show();
     //console.log(checkedAttendees);
     return false;
 }
@@ -138,8 +139,8 @@ google.calendar.getPreferences(getPrefsCallback);
 <center>
     <form id="formAttendees"></form>
     <form>
-        <button id="btnSubmitToWS" onclick="return SubmitToWS()" style="float:left">Submit to WS </button>
-        <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()" style="float:left">Re-Submit to WS </button>
+        <button id="btnSubmitToWS" onclick="return SubmitToWS()" style="float:left">Submit</button>
+        <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()" style="float:left">Re-Submit</button>
     </form>
 
 </center>
