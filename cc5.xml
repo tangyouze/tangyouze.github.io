@@ -1,7 +1,7 @@
 
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="addCalendar Test" height="40" author="Google"
+  <ModulePrefs title="Topcoder Widget" height="40" author="Google"
      author_email="rar.zip.7z@google.com">
    <Require feature="google.calendar-0.5" />
   </ModulePrefs>
@@ -30,7 +30,9 @@ function getPrefsCallback(prefs){
 google.calendar.getPreferences(getPrefsCallback);
 </script>
 <center>
-    google.calendar.subscribeToDataChange(
+    <form>
+        <button> Submit to </button>
+    </form>
  
 </center>
 
