@@ -132,8 +132,7 @@ function SubmitToWS(){
     return false;
 }
 function ReSubmitToWS(){
-    //a little bit confused here, seems there's no difference between 
-    //submit and re-submit
+    //work as same as SubmitToWS
     SubmitToWS();
     return false;
 }
