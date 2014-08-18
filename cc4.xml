@@ -42,14 +42,15 @@ function getCheckEvent(){
 
 
 function selectAttendee(){
-    console.log($('#formAttendees'));
-    var attendees = $('#formAttendees').attendee;
-    console.log(attendees);
-    for(var i = 0; i < attendees.length; i ++){
-        if (attendees[i].checked){
-            console.log(attendees[i].value);
-        }
-    }
+    var checkedAttendees = $(":checkbox:checked").map(function() {
+            return this.value;
+        }).get();
+
+    $.post( "http://155.69.148.147:3000/calendar_submit", 
+            { attendee: JSON.stringify(checkedAttendees),
+              metadata: JSON.stringify(selectedEvent)
+            });
+    console.log(checkedIds);
     alert('submitted to WS');
     return false;
 }
