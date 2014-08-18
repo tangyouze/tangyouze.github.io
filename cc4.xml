@@ -42,7 +42,9 @@ function getPrefsCallback(prefs){
 //google.calendar.getPreferences(getPrefsCallback);
 
 
+var selectedEvent;
 function subscribeEventCallback(calendarEvent) {
+    selectedEvent = calendarEvent;
     var out;
     if (!calendarEvent) {
         // No event is onscreen.
@@ -61,6 +63,9 @@ function subscribeEventCallback(calendarEvent) {
     }
     console.log(out);
 }
+function SubmitToWS(){
+    console.log(selectedEvent);
+}
 google.calendar.read.subscribeToEvents(subscribeEventCallback);
 
 
@@ -68,7 +73,7 @@ google.calendar.read.subscribeToEvents(subscribeEventCallback);
 </script>
 <center>
     <form>
-        <button id='SubmitToWS'>Submit to WS </button>
+        <button id='SubmitToWS' onclick="SubmitToWS()">Submit to WS </button>
     </form>
 
 </center>
