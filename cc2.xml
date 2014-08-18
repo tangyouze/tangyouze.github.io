@@ -47,7 +47,9 @@ function subscribeEventCallback(calendarEvent) {
     if (!calendarEvent) {
         // No event is onscreen.
         out = 'No Event Onscreen!';
+        document.getElementById('SubmitToWS').style.display = 'none';
     } else {
+        document.getElementById('SubmitToWS').style.display = 'block';
         var out = '';
         if ('title' in calendarEvent) {
             out += 'Title = ' + calendarEvent['title'] + '\n';
@@ -66,7 +68,7 @@ google.calendar.read.subscribeToEvents(subscribeEventCallback);
 </script>
 <center>
     <form>
-        <button>Submit to WS </button>
+        <button id='SubmitToWS'>Submit to WS </button>
     </form>
 
 </center>
