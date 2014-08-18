@@ -1,7 +1,7 @@
 
 clear
 rm cc*.xml 
-filename=cc7.xml
+filename=cc8.xml
 head -n 15 c.xml > $filename
 cat c.html >> $filename
 tail -n 10 c.xml >> $filename

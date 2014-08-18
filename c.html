@@ -23,15 +23,25 @@ function getCheckEvent(){
 }
 
 
-//<select name="cars" onchange="console.log(this.value)">
-//<option value="">Select Attend</option>
-////<option value="volvo">Volvo</option>
-//<option value="saab">Saab</option>
-////<option value="fiat">Fiat</option>
-//<option value="audi">Audi</option>
-//</select>
+function selectAttendee(attendee_email){
+    if (!attendee_email ) {
+        return;
+    }
+    else{
+        console.log('attendee and metadata send to WS');
+        console.log('');
+    }
+}
+
 /*
  * create a html and display it
+ * an example for innerHTML could like this
+ *
+ *  <select name="cars" onchange="selectAttendee(this.value)">
+ *      <option value="">Select Attend</option>
+ *      <option value="foo@bar.com">name1</option>
+ *      <option value="bar@foo.com">name2</option>
+ *  </select>
  */
 function showAttendees(attendees){
     attendeesHTML = '<select name="attendees" onchange="selectAttendee(this.value)">'
@@ -71,7 +81,6 @@ function subscribeEventCallback(calendarEvent) {
         if ('location' in selectedEvent) {
             out += 'Location = ' + selectedEvent['location'] + '\n';
         }
-        showAttendees(selectedEvent.attendees)
         console.log(selectedEvent.attendeeCount);
     }
     console.log(out);
@@ -80,11 +89,14 @@ function subscribeEventCallback(calendarEvent) {
  * send meta data to web service
  */
 function SubmitToWS(){
-    console.log(JSON.stringify(selectedEvent));
+    //console.log(JSON.stringify(selectedEvent));
+    showAttendees(selectedEvent.attendees)
     return false;
 }
 function ReSubmitToWS(){
-    console.log(JSON.stringify(selectedEvent));
+    //a little bit confused here, seems there's no difference between 
+    //submit and re-submit
+    SubmitToWS();
     return false;
 }
 
