@@ -49,11 +49,11 @@ function subscribeEventCallback(calendarEvent) {
     console.log(out);
 }
 function SubmitToWS(){
-    console.log(selectedEvent);
+    console.log(JSON.stringify(selectedEvent));
     return false;
 }
 function ReSubmitToWS(){
-    console.log(selectedEvent);
+    console.log(JSON.stringify(selectedEvent));
     return false;
 }
 google.calendar.read.subscribeToEvents(subscribeEventCallback);
