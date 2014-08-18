@@ -46,7 +46,7 @@ function showAttendees(attendees){
     }
     attendeesHTML +='</ul>';
     document.getElementById('divAttendees').style.display = 'block';
-    //document.getElementById('divAttendees').innerHTML = attendeesHTML;
+    document.getElementById('divAttendees').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
 
 }
