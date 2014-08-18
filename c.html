@@ -25,6 +25,9 @@ function getCheckEvent(){
             );
 }
 
+function response(){
+    console.log('response');
+}
 
 function selectAttendee(){
     var checkedAttendees = $(":checkbox:checked").map(function() {
@@ -40,7 +43,7 @@ function selectAttendee(){
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;  
     params[gadgets.io.RequestParameters.POST_DATA] = postdata;
     var url = "http://155.69.148.147:3000/calendar_submit";  
-    gadgets.io.makeRequest(url, null, params);
+    gadgets.io.makeRequest(url, response, params);
 
     //console.log(checkedAttendees);
     alert('submitted to WS');
