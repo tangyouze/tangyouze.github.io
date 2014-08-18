@@ -15,17 +15,24 @@
 
 <script>
 function add() {
-  google.calendar.addCalendar("en.usa#holiday@group.v.calendar.google.com",
-      "US Holidays");
+    google.calendar.addCalendar("en.usa#holiday@group.v.calendar.google.com",
+            "US Holidays");
 }
 </script>
 
 <script>
-function getNextEvents(){
-    console.log('get new events');
+
+function eventsCallback(events){
+    console.log(events);
+}
+function getCheckEvent(){
+    console.log('get selected events');
+    google.calendar.read.getEvents(
+            eventsCallback, 'selected',
+            );
 }
 function getPrefsCallback(prefs){
-  google.calendar.subscribeToDataChange(getNextEvents);
+    google.calendar.subscribeToDataChange(getCheckEvent);
 }
 google.calendar.getPreferences(getPrefsCallback);
 </script>
@@ -33,7 +40,7 @@ google.calendar.getPreferences(getPrefsCallback);
     <form>
         <button> Submit to </button>
     </form>
- 
+
 </center>
 
 </body>
