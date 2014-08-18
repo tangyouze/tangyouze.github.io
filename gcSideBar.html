@@ -8,31 +8,22 @@
 <body>
 
     <script>
-    function add() {
-        google.calendar.addCalendar("en.usa#holiday@group.v.calendar.google.com",
-            "US Holidays");
-    }
-    </script>
 
-    <script>
-    function eventsCallback(events) {
-        console.log(events);
-    }
-
-    function getCheckEvent() {
-        console.log('get selected events');
-        google.calendar.read.getEvents(
-            eventsCallback, 'selected'
-        );
-    }
 
     var ws_url = "http://google.com/ws";
+    var filter_url = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
 
-    function response() {
+    // notify user when we 
+    function submitAttendenceResponse() {
         alert('successfully submit to WS');
     }
 
-    function selectAttendee() {
+    /*
+     * submit the information contain selected attendees and
+     * metadata to the server
+     * ws_url can be configured as global variable
+     */
+    function submitAttendence() {
         var checkedAttendees = $(":checkbox:checked").map(function() {
             return this.value;
         }).get();
@@ -42,45 +33,46 @@
             attendee: JSON.stringify(checkedAttendees),
             metadata: JSON.stringify(selectedEvent)
         };
+        // create post data
         var postdata = gadgets.io.encodeValues(data);
-        console.log(postdata);
         var params = {}
         params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
         params[gadgets.io.RequestParameters.POST_DATA] = postdata;
-        gadgets.io.makeRequest(ws_url, response, params);
+        gadgets.io.makeRequest(ws_url, submitAttendenceResponse, params);
         var eventid = selectedEvent.id;
+
+        // store whether user submitted this event or not 
         submitted[eventid] = true;
 
         $("#btnReSubmitToWS").show();
-        //console.log(checkedAttendees);
         return false;
     }
 
-    var filter_url = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
+    // contain all the event that user submitted
     var submitted = {}
 
     /*
-     * create a html and display it
-     * an example for innerHTML could like this
-     *
+     * create attendees checkbox group
      */
     function showAttendees(attendees) {
-        console.log(attendees);
         attendeesHTML = ''
         for (var i = 0; i < attendees.length; i++) {
-            if (!match_filter(attendees[i].email)) {
+            // only to show if the attendees is not be filtered
+            if (!matchFilter(attendees[i].email)) {
+                // add the checkbox for each attendees, one per line
                 attendeesHTML += '<input type="checkbox" name="attendee" style="float:left" value="' + attendees[i].email + '">';
                 attendeesHTML += '<div style="width:50px;float:left;white-space:nowrap">' + attendees[i].email + '</div>';
                 attendeesHTML += '<br>';
             }
         }
-        attendeesHTML += '<button onclick="return selectAttendee();"> confirm</button>';
+        // add a confirm button to submit the selected attendence
+        attendeesHTML += '<button onclick="return submitAttendence();"> confirm</button>';
+        // display the select form
         $('#formAttendees').show();
         $('#formAttendees').html(attendeesHTML);
-        console.log(attendeesHTML);
     }
 
-    function match_filter(email) {
+    function matchFilter(email) {
         for (var i = 0; i < filters.length; i++) {
             filter = new RegExp(filters[i]);
             if (email.match(filter)) {
@@ -90,18 +82,17 @@
         return false;
     }
 
+    // global filters
     var filters = [];
-
-    function filter_response(obj) {
-        console.log(obj.text);
+    // handle http request response
+    function initFilterResponse(obj) {
         filters = obj.text.match(/[^\r\n]+/g);
-        console.log(filters);
     }
-
-    function init_filters() {
+    // init filters from pre_defined url
+    function initFilters() {
         var params = {};
         params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
-        gadgets.io.makeRequest(filter_url, filter_response, params);
+        gadgets.io.makeRequest(init_filter_url, initFilterResponse, params);
     }
 
     /*
@@ -119,10 +110,10 @@
         selectedEvent = calendarEvent;
         var out;
         if (!selectedEvent || selectedEvent['accessLevel'] != 'owner') {
-            // No event is onscreen.
-            out = 'No Event Onscreen!';
+            // no event select or the user is not owner
             hideElements();
         } else {
+            // if the user is owner
             var eventid = selectedEvent.id;
             $('#btnSubmitToWS').show();
             if (eventid in submitted) {
@@ -135,19 +126,19 @@
             if ('location' in selectedEvent) {
                 out += 'Location = ' + selectedEvent['location'] + '\n';
             }
-            console.log(selectedEvent.attendeeCount);
         }
-        console.log(out);
     }
     /*
-     * send meta data to web service
+     * handle action for submit button
      */
     function SubmitToWS() {
-        //console.log(JSON.stringify(selectedEvent));
         showAttendees(selectedEvent.attendees)
         return false;
     }
 
+    /*
+     * handle action for re-submit button
+     */
     function ReSubmitToWS() {
         //work as same as SubmitToWS
         SubmitToWS();
@@ -155,16 +146,17 @@
     }
 
     /*
-     * init calendar, set all element to invisible
+     * start initialization process.
      */
     function getPrefsCallback(prefs) {
-        init_filters();
+        initFilters();
         hideElements();
         google.calendar.read.subscribeToEvents(subscribeEventCallback);
     }
 
     google.calendar.getPreferences(getPrefsCallback);
     </script>
+
     <center>
         <form id="formAttendees"></form>
         <form>
