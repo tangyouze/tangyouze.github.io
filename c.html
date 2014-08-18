@@ -23,7 +23,7 @@ function getCheckEvent(){
 }
 
 
-function selectAttendee(attendee_email){
+function selectAttendee(){
     if (!attendee_email ) {
         return;
     }
@@ -37,19 +37,14 @@ function selectAttendee(attendee_email){
  * create a html and display it
  * an example for innerHTML could like this
  *
- *  <select name="cars" onchange="selectAttendee(this.value)">
- *      <option value="">Select Attend</option>
- *      <option value="foo@bar.com">name1</option>
- *      <option value="bar@foo.com">name2</option>
- *  </select>
  */
 function showAttendees(attendees){
-    attendeesHTML = '<select name="attendees" onchange="selectAttendee(this.value)">'
-    attendeesHTML += '<option value=""> Select Attend</option>'
+    attendeesHTML += ''
     for(var i=0; i<attendees.length; i++){
-        attendeesHTML += '<option value="' + attendees[i].email + '">' + attendees[i].name + '</option>';
+        attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email'">'
+            + attendees[i].name + "<br>";
     }
-    attendeesHTML +='</select>';
+    attendeesHTML +='<button onclick="reutrn selectAttendee()"> confirm</button>';
     document.getElementById('divAttendees').style.display = 'block';
     document.getElementById('divAttendees').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
