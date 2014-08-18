@@ -47,7 +47,7 @@ function showAttendees(attendees){
         attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email + '">'
             + attendees[i].email + "<br>";
     }
-    attendeesHTML +='<input type="button" onclick="selectAttendee();"> confirm</input>';
+    attendeesHTML +='<input type="button" onclick="selectAttendee()" value="confirm>";
     document.getElementById('formAttendees').style.display = 'block';
     document.getElementById('formAttendees').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
@@ -114,8 +114,8 @@ google.calendar.getPreferences(getPrefsCallback);
 <center>
     <form id="formAttendees"></form>
     <form>
-        <input id="btnSubmitToWS" type="button" onclick="SubmitToWS()">Submit to WS </input>
-        <input id="btnReSubmitToWS" type="button" onclick="ReSubmitToWS()">Re-Submit to WS </input>
+        <input id="btnSubmitToWS" type="button" onclick="SubmitToWS()" value="Submit to WS">
+        <input id="btnReSubmitToWS" type="button" onclick="ReSubmitToWS()" value="Re-Submit to WS">
     </form>
 
 </center>
