@@ -45,6 +45,7 @@ function selectAttendee(){
             console.log(attendees[i].value);
         }
     }
+    return false;
 }
 
 
