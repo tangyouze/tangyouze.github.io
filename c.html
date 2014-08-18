@@ -84,7 +84,7 @@ function filter_response(obj){
     filters = obj.text.split('\r?\n');
     console.log(filters);
 }
-function init_filter(){
+function init_filters(){
     var params = {};
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
     gadgets.io.makeRequest(filter_url, filter_response, params); 
