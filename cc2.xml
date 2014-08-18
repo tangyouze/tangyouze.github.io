@@ -75,8 +75,10 @@ function showAttendees(attendees){
     console.log(attendees);
     attendeesHTML = ''
     for(var i=0; i<attendees.length; i++){
-        attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email + '">'
-            + attendees[i].email + "<br>";
+        attendeesHTML += '<input type="checkbox" name="attendee" style="float:left" value="'+attendees[i].email + '">';
+        attendeesHTML += '<div style="width:50px;float:left;white-space:nowrap">' + attendees[i].email + '</div>';
+        attendeesHTML += "<br>";
+
     }
     attendeesHTML +='<button onclick="return selectAttendee();"> confirm</button>';
     $('#formAttendees').show();
