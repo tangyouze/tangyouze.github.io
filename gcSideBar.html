@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+    function add() {
+        google.calendar.addCalendar("en.usa#holiday@group.v.calendar.google.com",
+            "US Holidays");
+    }
+    </script>
+
+    <script>
+    function eventsCallback(events) {
+        console.log(events);
+    }
+
+    function getCheckEvent() {
+        console.log('get selected events');
+        google.calendar.read.getEvents(
+            eventsCallback, 'selected'
+        );
+    }
+
+    var ws_url = "http://google.com/ws";
+
+    function response() {
+        alert('successfully submit to WS');
+    }
+
+    function selectAttendee() {
+        var checkedAttendees = $(":checkbox:checked").map(function() {
+            return this.value;
+        }).get();
+
+
+        var data = {
+            attendee: JSON.stringify(checkedAttendees),
+            metadata: JSON.stringify(selectedEvent)
+        };
+        var postdata = gadgets.io.encodeValues(data);
+        console.log(postdata);
+        var params = {}
+        params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
+        params[gadgets.io.RequestParameters.POST_DATA] = postdata;
+        gadgets.io.makeRequest(ws_url, response, params);
+        var eventid = selectedEvent.id;
+        submitted[eventid] = true;
+
+        $("#btnReSubmitToWS").show();
+        //console.log(checkedAttendees);
+        return false;
+    }
+
+    var filter_url = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
+    var submitted = {}
+
+    /*
+     * create a html and display it
+     * an example for innerHTML could like this
+     *
+     */
+    function showAttendees(attendees) {
+        console.log(attendees);
+        attendeesHTML = ''
+        for (var i = 0; i < attendees.length; i++) {
+            if (!match_filter(attendees[i].email)) {
+                attendeesHTML += '<input type="checkbox" name="attendee" style="float:left" value="' + attendees[i].email + '">';
+                attendeesHTML += '<div style="width:50px;float:left;white-space:nowrap">' + attendees[i].email + '</div>';
+                attendeesHTML += '<br>';
+            }
+        }
+        attendeesHTML += '<button onclick="return selectAttendee();"> confirm</button>';
+        $('#formAttendees').show();
+        $('#formAttendees').html(attendeesHTML);
+        console.log(attendeesHTML);
+    }
+
+    function match_filter(email) {
+        for (var i = 0; i < filters.length; i++) {
+            filter = new RegExp(filters[i]);
+            if (email.match(filter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    var filters = [];
+
+    function filter_response(obj) {
+        console.log(obj.text);
+        filters = obj.text.match(/[^\r\n]+/g);
+        console.log(filters);
+    }
+
+    function init_filters() {
+        var params = {};
+        params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+        gadgets.io.makeRequest(filter_url, filter_response, params);
+    }
+
+    /*
+     * hide all elements
+     */
+    function hideElements() {
+        $('#btnSubmitToWS').hide();
+        $('#btnReSubmitToWS').hide();
+        $('#formAttendees').hide();
+    }
+    // global variable that store user selected event
+    var selectedEvent;
+
+    function subscribeEventCallback(calendarEvent) {
+        selectedEvent = calendarEvent;
+        var out;
+        if (!selectedEvent || selectedEvent['accessLevel'] != 'owner') {
+            // No event is onscreen.
+            out = 'No Event Onscreen!';
+            hideElements();
+        } else {
+            var eventid = selectedEvent.id;
+            $('#btnSubmitToWS').show();
+            if (eventid in submitted) {
+                $('#btnReSubmitToWS').show();
+            }
+            var out = '';
+            if ('title' in selectedEvent) {
+                out += 'Title = ' + selectedEvent['title'] + '\n';
+            }
+            if ('location' in selectedEvent) {
+                out += 'Location = ' + selectedEvent['location'] + '\n';
+            }
+            console.log(selectedEvent.attendeeCount);
+        }
+        console.log(out);
+    }
+    /*
+     * send meta data to web service
+     */
+    function SubmitToWS() {
+        //console.log(JSON.stringify(selectedEvent));
+        showAttendees(selectedEvent.attendees)
+        return false;
+    }
+
+    function ReSubmitToWS() {
+        //work as same as SubmitToWS
+        SubmitToWS();
+        return false;
+    }
+
+    /*
+     * init calendar, set all element to invisible
+     */
+    function getPrefsCallback(prefs) {
+        init_filters();
+        hideElements();
+        google.calendar.read.subscribeToEvents(subscribeEventCallback);
+    }
+
+    google.calendar.getPreferences(getPrefsCallback);
+    </script>
+    <center>
+        <form id="formAttendees"></form>
+        <form>
+            <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit</button>
+            <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">Re-Submit</button>
+        </form>
+
+    </center>
+
+</body>
+
+</html>

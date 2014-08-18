@@ -1,10 +1,10 @@
 
 clear
-rm cc*.xml 
-filename=cc8.xml
-head -n 15 c.xml > $filename
-cat c.html >> $filename
-tail -n 10 c.xml >> $filename
+#rm cc*.xml 
+filename=gcSideBar_submit.xml
+head -n 15 gcSideBar.xml > $filename
+cat gcSideBar.html >> $filename
+tail -n 10 gcSideBar.xml >> $filename
 git add --all
 git add . 
 git commit  -m 'auto commit'
