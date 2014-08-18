@@ -1,0 +1,196 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Submit2WS" height="200" author="Google"
+        author_email="rar.zip.7z@google.com">
+        <Require feature="google.calendar-0.5" />
+        <Require feature="google.calendar-0.5.read"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+
+
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+
+
+    var webserviceURL = "http://google.com/ws";
+    var filterURL = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
+
+    // notify user when we 
+    function submitAttendenceResponse() {
+        alert('successfully submit to WS');
+    }
+
+    /*
+     * submit the information contain selected attendees and
+     * metadata to the server
+     * webserviceURL can be configured as global variable
+     */
+    function submitAttendence() {
+        var checkedAttendees = $(":checkbox:checked").map(function() {
+            return this.value;
+        }).get();
+
+
+        var data = {
+            attendee: JSON.stringify(checkedAttendees),
+            metadata: JSON.stringify(selectedEvent)
+        };
+        // create post data
+        var postdata = gadgets.io.encodeValues(data);
+        var params = {}
+        params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
+        params[gadgets.io.RequestParameters.POST_DATA] = postdata;
+        gadgets.io.makeRequest(webserviceURL, submitAttendenceResponse, params);
+        var eventid = selectedEvent.id;
+
+        // store whether user submitted this event or not 
+        submitted[eventid] = true;
+
+        $("#btnReSubmitToWS").show();
+        return false;
+    }
+
+    // contain all the event that user submitted
+    var submitted = {}
+
+    /*
+     * create attendees checkbox group
+     */
+    function showAttendees(attendees) {
+        attendeesHTML = ''
+        for (var i = 0; i < attendees.length; i++) {
+            // only to show if the attendees is not be filtered
+            if (!matchFilter(attendees[i].email)) {
+                // add the checkbox for each attendees, one per line
+                attendeesHTML += '<input type="checkbox" name="attendee" style="float:left" value="' + attendees[i].email + '">';
+                attendeesHTML += '<div style="width:50px;float:left;white-space:nowrap">' + attendees[i].email + '</div>';
+                attendeesHTML += '<br>';
+            }
+        }
+        // add a confirm button to submit the selected attendence
+        attendeesHTML += '<button onclick="return submitAttendence();"> confirm</button>';
+        // display the select form
+        $('#formAttendees').show();
+        $('#formAttendees').html(attendeesHTML);
+    }
+
+    function matchFilter(email) {
+        for (var i = 0; i < filters.length; i++) {
+            filter = new RegExp(filters[i]);
+            if (email.match(filter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // global filters
+    var filters = [];
+    // handle http request response
+    function initFilterResponse(obj) {
+        filters = obj.text.match(/[^\r\n]+/g);
+    }
+    // init filters from pre_defined url
+    function initFilters() {
+        var params = {};
+        params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+        gadgets.io.makeRequest(filterURL, initFilterResponse, params);
+    }
+
+    /*
+     * hide all elements
+     */
+    function hideElements() {
+        $('#btnSubmitToWS').hide();
+        $('#btnReSubmitToWS').hide();
+        $('#formAttendees').hide();
+    }
+    // global variable that store user selected event
+    var selectedEvent;
+
+    function subscribeEventCallback(calendarEvent) {
+        selectedEvent = calendarEvent;
+        var out;
+        if (!selectedEvent || selectedEvent['accessLevel'] != 'owner') {
+            // no event select or the user is not owner
+            hideElements();
+        } else {
+            // if the user is owner
+            var eventid = selectedEvent.id;
+            $('#btnSubmitToWS').show();
+            if (eventid in submitted) {
+                $('#btnReSubmitToWS').show();
+            }
+            var out = '';
+            if ('title' in selectedEvent) {
+                out += 'Title = ' + selectedEvent['title'] + '\n';
+            }
+            if ('location' in selectedEvent) {
+                out += 'Location = ' + selectedEvent['location'] + '\n';
+            }
+        }
+    }
+    /*
+     * handle action for submit button
+     */
+    function SubmitToWS() {
+        showAttendees(selectedEvent.attendees)
+        return false;
+    }
+
+    /*
+     * handle action for re-submit button
+     */
+    function ReSubmitToWS() {
+        //work as same as SubmitToWS
+        SubmitToWS();
+        return false;
+    }
+
+    /*
+     * start initialization process.
+     */
+    function getPrefsCallback(prefs) {
+        initFilters();
+        hideElements();
+        google.calendar.read.subscribeToEvents(subscribeEventCallback);
+    }
+
+    google.calendar.getPreferences(getPrefsCallback);
+    </script>
+
+    <center>
+        <form id="formAttendees"></form>
+        <form>
+            <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit</button>
+            <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">Re-Submit</button>
+        </form>
+
+    </center>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+        ]]>
+    </Content>
+</Module>
