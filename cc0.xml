@@ -55,7 +55,7 @@ function subscribeEventCallback(calendarEvent) {
         if ('location' in calendarEvent) {
             out += 'Location = ' + calendarEvent['location'] + '\n';
         }
-        console.log(calendar.attendeeCount)
+        console.log(calendar.attendeeCount);
     }
     console.log(out);
 }
