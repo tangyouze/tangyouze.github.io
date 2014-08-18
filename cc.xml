@@ -21,8 +21,6 @@ function add() {
 </script>
 
 <center>
-<!--<button onclick="add()">Add US Holidays</button>
--->
 Good Job
 </center>
 
