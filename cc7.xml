@@ -129,8 +129,8 @@ google.calendar.getPreferences(getPrefsCallback);
 <center>
     <form id="formAttendees"></form>
     <form>
-        <input id="btnSubmitToWS" onclick="SubmitToWS()">Submit to WS </input>
-        <input id="btnReSubmitToWS" onclick="ReSubmitToWS()">Re-Submit to WS </input>
+        <input id="btnSubmitToWS" type="button" onclick="SubmitToWS()">Submit to WS </input>
+        <input id="btnReSubmitToWS" type="button" onclick="ReSubmitToWS()">Re-Submit to WS </input>
     </form>
 
 </center>
