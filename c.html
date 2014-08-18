@@ -65,7 +65,7 @@ function showAttendees(attendees){
     console.log(attendees);
     attendeesHTML = ''
     for(var i=0; i<attendees.length; i++){
-        if(! match_filter(attendees[i])){
+        if(! match_filter(attendees[i].email)){
             attendeesHTML += '<input type="checkbox" name="attendee" style="float:left" value="'+attendees[i].email + '">';
             attendeesHTML += '<div style="width:50px;float:left;white-space:nowrap">' + attendees[i].email + '</div>';
             attendeesHTML += '<br>';
