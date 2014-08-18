@@ -35,14 +35,21 @@ function showAttendees(attendees){
     console.log(attendeesHTML);
 
 }
+/*
+ * hide all elements
+ */
+function hideElements(){
+    document.getElementById('btnSubmitToWS').style.display = 'none';
+    document.getElementById('btnReSubmitToWS').style.display = 'none';
+    document.getElementById('divAttendees').style.display = 'none';
+}
 function subscribeEventCallback(calendarEvent) {
     selectedEvent = calendarEvent;
     var out;
     if (!selectedEvent || selectedEvent['accessLevel']!='owner') {
         // No event is onscreen.
         out = 'No Event Onscreen!';
-        document.getElementById('btnSubmitToWS').style.display = 'none';
-        document.getElementById('btnReSubmitToWS').style.display = 'none';
+        hideElements();
     } else {
         document.getElementById('btnSubmitToWS').style.display = 'block';
         var out = '';
@@ -73,9 +80,7 @@ function ReSubmitToWS(){
  * init calendar, set all element to invisible
  */
 function getPrefsCallback(prefs){
-    document.getElementById('btnSubmitToWS').style.display = 'none';
-    document.getElementById('btnReSubmitToWS').style.display = 'none';
-    document.getElementById('divAttendees').style.display = 'none';
+    hideElements();
     google.calendar.read.subscribeToEvents(subscribeEventCallback);
 }
 
@@ -88,7 +93,7 @@ google.calendar.getPreferences(getPrefsCallback);
     <div id="divAttendees"></div>
     <form>
         <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit to WS </button>
-        <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">ReSubmit to WS </button>
+        <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">Re-Submit to WS </button>
     </form>
 
 </center>
