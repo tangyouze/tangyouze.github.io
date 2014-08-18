@@ -5,6 +5,8 @@
      author_email="rar.zip.7z@google.com">
    <Require feature="google.calendar-0.5" />
   </ModulePrefs>
+  <Require feature="google.calendar-0.5"/>
+  <Require feature="google.calendar-0.5.read"/>
   <Content type="html">
 <![CDATA[
 
