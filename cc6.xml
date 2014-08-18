@@ -41,8 +41,8 @@ function getCheckEvent(){
 var selectedEvent;
 function showAttendees(attendees){
     attendeesHTML = '<ul>'
-    for(attendee in attendees){
-        attendeesHTML += '<li>' + attendee.email + '</li>';
+    for(var i=0; i<attendees.length; i++){
+        attendeesHTML += '<li>' + attendees[i].email + '</li>';
     }
     attendeesHTML +='</ul>';
     document.getElementById('divAttendees').style.display = 'block';
