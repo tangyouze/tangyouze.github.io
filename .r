@@ -1,6 +1,7 @@
 
 clear
-filename=c5.xml
+rm cc*.xml 
+filename=cc5.xml
 head -n 10 c.xml > $filename
 cat c.html >> $filename
 tail -n 10 c.xml >> $filename

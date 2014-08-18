@@ -1,0 +1,48 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="addCalendar Test" height="40" author="Google"
+     author_email="rar.zip.7z@google.com">
+   <Require feature="google.calendar-0.5" />
+  </ModulePrefs>
+  <Content type="html">
+<![CDATA[
+
+
+<!DOCTYPE HTML>
+<html>
+<body>
+
+<script>
+function add() {
+  google.calendar.addCalendar("en.usa#holiday@group.v.calendar.google.com",
+      "US Holidays");
+}
+</script>
+
+<script>
+function getNextEvents(){
+    console.log('get new events');
+}
+function getPrefsCallback(prefs){
+  google.calendar.subscribeToDataChange(getNextEvents);
+}
+google.calendar.getPreferences(getPrefsCallback);
+</script>
+<center>
+    google.calendar.subscribeToDataChange(
+ 
+</center>
+
+</body>
+</html>
+
+
+
+
+
+
+
+]]>
+  </Content>
+</Module>
