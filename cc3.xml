@@ -39,6 +39,7 @@ function getCheckEvent(){
 
 
 function selectAttendee(){
+    console.log(document.getElementById('formAttendees'));
     var attendees = document.getElementById('formAttendees').attendee;
     console.log(attendees);
     for(var i = 0; i < attendees.length; i ++){
@@ -61,7 +62,7 @@ function showAttendees(attendees){
         attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email + '">'
             + attendees[i].email + "<br>";
     }
-    attendeesHTML +='<button onclick="reutrn selectAttendee()"> confirm</button>';
+    attendeesHTML +='<button onclick="reutrn selectAttendee();"> confirm</button>';
     document.getElementById('formAttendees').style.display = 'block';
     document.getElementById('formAttendees').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
