@@ -9,4 +9,5 @@ git add --all
 git add . 
 git commit  -m 'auto commit'
 git push > /dev/null 2>/dev/null&
+echo $filename
 
