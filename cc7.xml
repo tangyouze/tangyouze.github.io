@@ -63,7 +63,7 @@ function selectAttendee(){
     var eventid = selectedEvent.id;
     submitted[eventid] = true;
 
-    $("#btnSubmitToWS").show();
+    $("#btnReSubmitToWS").show();
     //console.log(checkedAttendees);
     return false;
 }
