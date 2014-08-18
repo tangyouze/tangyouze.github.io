@@ -34,7 +34,7 @@ function showAttendees(attendees){
     document.getElementById('divAttendees').html(attendeesHTML)
 
 }
-function subscribeEventCallback(selectedEvent) {
+function subscribeEventCallback(calendarEvent) {
     selectedEvent = calendarEvent;
     var out;
     if (!selectedEvent || selectedEvent['accessLevel']!='owner') {
