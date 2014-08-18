@@ -23,13 +23,23 @@ function getCheckEvent(){
 }
 
 
-var selectedEvent;
+//<select name="cars" onchange="console.log(this.value)">
+//<option value="">Select Attend</option>
+////<option value="volvo">Volvo</option>
+//<option value="saab">Saab</option>
+////<option value="fiat">Fiat</option>
+//<option value="audi">Audi</option>
+//</select>
+/*
+ * create a html and display it
+ */
 function showAttendees(attendees){
-    attendeesHTML = '<ul>'
+    attendeesHTML = '<select name="attendees" onchange="selectAttendee(this.value)">'
+    attendeesHTML += '<option value=""> Select Attend</option>'
     for(var i=0; i<attendees.length; i++){
-        attendeesHTML += '<li>' + attendees[i].email + '</li>';
+        attendeesHTML += '<option value="' + attendees[i].email + '">' + attendees[i].name + '</option>';
     }
-    attendeesHTML +='</ul>';
+    attendeesHTML +='</select>';
     document.getElementById('divAttendees').style.display = 'block';
     document.getElementById('divAttendees').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
@@ -43,6 +53,8 @@ function hideElements(){
     document.getElementById('btnReSubmitToWS').style.display = 'none';
     document.getElementById('divAttendees').style.display = 'none';
 }
+// global variable that store user selected event
+var selectedEvent;
 function subscribeEventCallback(calendarEvent) {
     selectedEvent = calendarEvent;
     var out;
@@ -90,7 +102,7 @@ google.calendar.getPreferences(getPrefsCallback);
 
 </script>
 <center>
-    <div id="divAttendees"></div>
+    <form id="divAttendees"></form>
     <form>
         <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit to WS </button>
         <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">Re-Submit to WS </button>
