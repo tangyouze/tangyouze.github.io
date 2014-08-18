@@ -40,6 +40,7 @@ function subscribeEventCallback(calendarEvent) {
         if ('location' in calendarEvent) {
             out += 'Location = ' + calendarEvent['location'] + '\n';
         }
+        console.log(calendar.attendeeCount)
     }
     console.log(out);
 }
@@ -50,7 +51,7 @@ google.calendar.read.subscribeToEvents(subscribeEventCallback);
 </script>
 <center>
     <form>
-        <button> Submit to </button>
+        <button>Submit to WS </button>
     </form>
 
 </center>
