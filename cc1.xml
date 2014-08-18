@@ -16,6 +16,9 @@
 
 <!DOCTYPE HTML>
 <html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
 <body>
 
 <script>
@@ -39,14 +42,15 @@ function getCheckEvent(){
 
 
 function selectAttendee(){
-    console.log(document.getElementById('formAttendees'));
-    var attendees = document.getElementById('formAttendees').attendee;
+    console.log($('#formAttendees'));
+    var attendees = $('#formAttendees').attendee;
     console.log(attendees);
     for(var i = 0; i < attendees.length; i ++){
         if (attendees[i].checked){
             console.log(attendees[i].value);
         }
     }
+    alert('submitted to WS');
     return false;
 }
 
@@ -64,18 +68,17 @@ function showAttendees(attendees){
             + attendees[i].email + "<br>";
     }
     attendeesHTML +='<button onclick="return selectAttendee();"> confirm</button>';
-    document.getElementById('formAttendees').style.display = 'block';
-    document.getElementById('formAttendees').innerHTML = attendeesHTML;
+    $('#formAttendees').style.display = 'block';
+    $('#formAttendees').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
-
 }
 /*
  * hide all elements
  */
 function hideElements(){
-    document.getElementById('btnSubmitToWS').style.display = 'none';
-    document.getElementById('btnReSubmitToWS').style.display = 'none';
-    document.getElementById('formAttendees').style.display = 'none';
+    $('#btnSubmitToWS').style.display = 'none';
+    $('#btnReSubmitToWS').style.display = 'none';
+    $('#formAttendees').style.display = 'none';
 }
 // global variable that store user selected event
 var selectedEvent;
@@ -87,7 +90,7 @@ function subscribeEventCallback(calendarEvent) {
         out = 'No Event Onscreen!';
         hideElements();
     } else {
-        document.getElementById('btnSubmitToWS').style.display = 'block';
+        $('#btnSubmitToWS').style.display = 'block';
         var out = '';
         if ('title' in selectedEvent) {
             out += 'Title = ' + selectedEvent['title'] + '\n';
