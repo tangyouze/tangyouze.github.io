@@ -20,8 +20,18 @@ function add() {
 }
 </script>
 
+<script>
+function getNextEvents(){
+    console.log('get new events');
+}
+function getPrefsCallback(prefs){
+  google.calendar.subscribeToDataChange(getNextEvents);
+}
+google.calendar.getPreferences(getPrefsCallback);
+</script>
 <center>
-Good Job
+    google.calendar.subscribeToDataChange(
+ 
 </center>
 
 </body>
