@@ -53,6 +53,7 @@ function selectAttendee(){
     return false;
 }
 
+var filter_url = 'https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/filter.txt'
 var submitted = {}
 
 /*
@@ -74,6 +75,21 @@ function showAttendees(attendees){
     $('#formAttendees').html( attendeesHTML );
     console.log(attendeesHTML);
 }
+
+function check_filter(){
+}
+
+var filters=[];
+function filter_response(obj){
+    filters = obj.text.split('\r?\n');
+    console.log(filters);
+}
+function init_filter(){
+    var params = {};
+    params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+    gadgets.io.makeRequest(filter_url, filter_response, params); 
+}
+
 /*
  * hide all elements
  */
@@ -126,6 +142,7 @@ function ReSubmitToWS(){
  * init calendar, set all element to invisible
  */
 function getPrefsCallback(prefs){
+    init_filters();
     hideElements();
     google.calendar.read.subscribeToEvents(subscribeEventCallback);
 }
