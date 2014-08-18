@@ -39,7 +39,29 @@ function getCheckEvent(){
 function getPrefsCallback(prefs){
     google.calendar.subscribeToDataChange(getCheckEvent);
 }
-google.calendar.getPreferences(getPrefsCallback);
+//google.calendar.getPreferences(getPrefsCallback);
+
+
+function subscribeEventCallback(calendarEvent) {
+    var out;
+    if (!calendarEvent) {
+        // No event is onscreen.
+        out = 'No Event Onscreen!';
+    } else {
+        var out = '';
+        if ('title' in calendarEvent) {
+            out += 'Title = ' + calendarEvent['title'] + '\n';
+        }
+        if ('location' in calendarEvent) {
+            out += 'Location = ' + calendarEvent['location'] + '\n';
+        }
+    }
+    console.log(out);
+}
+google.calendar.read.subscribeToEvents(subscribeEventCallback);
+
+
+
 </script>
 <center>
     <form>
