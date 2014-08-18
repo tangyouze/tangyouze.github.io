@@ -31,11 +31,14 @@ function selectAttendee(){
             return this.value;
         }).get();
 
-    $.post( "http://155.69.148.147:3000/calendar_submit", 
-            { attendee: JSON.stringify(checkedAttendees),
-              metadata: JSON.stringify(selectedEvent)
-            });
-    console.log(checkedAttendees);
+
+    var params = { attendee: JSON.stringify(checkedAttendees),
+              metadata: JSON.stringify(selectedEvent) };
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;  
+    var url = "http://155.69.148.147:3000/calendar_submit";  
+    gadgets.io.makeRequest(url, null, params);
+
+    //console.log(checkedAttendees);
     alert('submitted to WS');
     return false;
 }
