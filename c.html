@@ -42,15 +42,17 @@ function selectAttendee(){
  *
  */
 function showAttendees(attendees){
-    attendeesHTML = ''
-    for(var i=0; i<attendees.length; i++){
-        attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email + '">'
-            + attendees[i].email + "<br>";
-    }
-    //attendeesHTML +='<button onclick="reutrn selectAttendee();"> confirm</button>';
     document.getElementById('formAttendees').style.display = 'block';
-    document.getElementById('attendeesSelection').innerHTML = attendeesHTML;
-    console.log(attendeesHTML);
+    console.log('over');
+    //attendeesHTML = ''
+    //for(var i=0; i<attendees.length; i++){
+    //    attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email + '">'
+    //        + attendees[i].email + "<br>";
+    //}
+    ////attendeesHTML +='<button onclick="reutrn selectAttendee();"> confirm</button>';
+    //document.getElementById('formAttendees').style.display = 'block';
+    //document.getElementById('attendeesSelection').innerHTML = attendeesHTML;
+    //console.log(attendeesHTML);
 
 }
 /*
