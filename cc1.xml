@@ -40,8 +40,10 @@ function getCheckEvent(){
             );
 }
 
+var ws_url = "http://google.com/ws";  
+
 function response(){
-    console.log('response');
+    alert('successfully submit to WS');
 }
 
 function selectAttendee(){
@@ -57,11 +59,9 @@ function selectAttendee(){
     var params = {}
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;  
     params[gadgets.io.RequestParameters.POST_DATA] = postdata;
-    var url = "http://155.69.148.147:3000/calendar_submit";  
-    gadgets.io.makeRequest(url, response, params);
+    gadgets.io.makeRequest(ws_url, response, params);
 
     //console.log(checkedAttendees);
-    alert('submitted to WS');
     return false;
 }
 
