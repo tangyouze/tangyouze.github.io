@@ -1,6 +1,5 @@
 ### install
-to install, visit url 
-https://www.google.com/calendar/render?gadgeturl=https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/gcSideBar_submit.xml
+to install, visit  [link](https://www.google.com/calendar/render?gadgeturl=https://raw.githubusercontent.com/tangyouze/tangyouze.github.io/master/gcSideBar_submit.xml)
 
 
 ### filter
