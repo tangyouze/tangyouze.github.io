@@ -63,9 +63,8 @@ function showAttendees(attendees){
             + attendees[i].email + "<br>";
     }
     //attendeesHTML +='<button onclick="reutrn selectAttendee();"> confirm</button>';
-    attendeesHTML +='<button onclick="alert(123);reutrn false;"> confirm</button>';
     document.getElementById('formAttendees').style.display = 'block';
-    document.getElementById('formAttendees').innerHTML = attendeesHTML;
+    document.getElementById('attendeesSelection').innerHTML = attendeesHTML;
     console.log(attendeesHTML);
 
 }
@@ -128,7 +127,11 @@ google.calendar.getPreferences(getPrefsCallback);
 
 </script>
 <center>
-    <form id="formAttendees"></form>
+    <form id="formAttendees">
+        <div id="attendeesSelection">
+        </div>
+        <button onclick="alert(123);reutrn false;"> confirm</button>
+    </form>
     <form>
         <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit to WS </button>
         <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">Re-Submit to WS </button>
