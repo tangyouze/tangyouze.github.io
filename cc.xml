@@ -2,15 +2,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
   <ModulePrefs title="addCalendar Test" height="40" author="Google"
-     author_email="calendar-gadget-questions@google.com">
+     author_email="rar.zip.7z@google.com">
    <Require feature="google.calendar-0.5" />
   </ModulePrefs>
   <Content type="html">
 <![CDATA[
 
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-  "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
 <body>
 
@@ -22,7 +21,9 @@ function add() {
 </script>
 
 <center>
-<button onclick="add()">Add US Holidays</button>
+<!--<button onclick="add()">Add US Holidays</button>
+-->
+Good Job
 </center>
 
 </body>

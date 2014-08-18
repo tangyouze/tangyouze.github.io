@@ -2,7 +2,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
   <ModulePrefs title="addCalendar Test" height="40" author="Google"
-     author_email="calendar-gadget-questions@google.com">
+     author_email="rar.zip.7z@google.com">
    <Require feature="google.calendar-0.5" />
   </ModulePrefs>
   <Content type="html">
