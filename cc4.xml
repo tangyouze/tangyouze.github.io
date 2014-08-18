@@ -60,11 +60,14 @@ function selectAttendee(){
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;  
     params[gadgets.io.RequestParameters.POST_DATA] = postdata;
     gadgets.io.makeRequest(ws_url, response, params);
+    var eventid = selectedEvent.id;
+    submitted[eventid] = true;
 
     //console.log(checkedAttendees);
     return false;
 }
 
+var submitted = {}
 
 /*
  * create a html and display it
@@ -103,7 +106,11 @@ function subscribeEventCallback(calendarEvent) {
         out = 'No Event Onscreen!';
         hideElements();
     } else {
+        var eventid = selectedEvent.id;
         $('#btnSubmitToWS').show();
+        if (eventid in submitted){
+            $('#btnReSubmitToWS').show();
+        }
         var out = '';
         if ('title' in selectedEvent) {
             out += 'Title = ' + selectedEvent['title'] + '\n';
@@ -146,8 +153,8 @@ google.calendar.getPreferences(getPrefsCallback);
 <center>
     <form id="formAttendees"></form>
     <form>
-        <button id="btnSubmitToWS" onclick="return SubmitToWS()">Submit to WS </button>
-        <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()">Re-Submit to WS </button>
+        <button id="btnSubmitToWS" onclick="return SubmitToWS()" style="float:left">Submit to WS </button>
+        <button id="btnReSubmitToWS" onclick="return ReSubmitToWS()" style="float:left">Re-Submit to WS </button>
     </form>
 
 </center>
