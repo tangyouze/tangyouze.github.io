@@ -54,7 +54,7 @@ function selectAttendee(){
  *
  */
 function showAttendees(attendees){
-    attendeesHTML += ''
+    attendeesHTML = ''
     for(var i=0; i<attendees.length; i++){
         attendeesHTML += '<input type="checkbox" name="attendee" value="'+attendees[i].email + '">'
             + attendees[i].name + "<br>";
